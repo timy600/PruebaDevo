@@ -2,7 +2,6 @@
 si es un número perfecto, abundante o defectivo.
 """
 
-
 def verificar_lista_numeros_perfectos(lista):
     lista_respuesta = []
     # Verificar que el parametro sea una lista
