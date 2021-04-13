@@ -6,6 +6,8 @@ si es un número perfecto, abundante o defectivo.
 def verificar_lista_numeros_perfectos(lista):
     lista_respuesta = []
     # Verificar que el parametro sea una lista
+    if type(lista) != list:
+        return "TypeError: Expecting list of integers"
     # Boucle sobre la lista de parametros.
     for n in lista:
         # Crear una lista de divisores, hasta n/2.

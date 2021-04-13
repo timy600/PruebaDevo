@@ -10,3 +10,5 @@ Para verificar que sea un divisor de n, hacemos un bucle desde 1 (siempre parte 
 
 Por fin, con la lista de divisores, hacer una suma y compararla con n.
 Añadir cada resultado "perfecto", "abundante" o "defectivo" en una nueva lista para el Return.
+
+Añadié una verification del tipo del parametro. En caso de que hacen falta mas Error Handlings, pasaria a una funcion con un contenido try/except. 
