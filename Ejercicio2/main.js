@@ -1,11 +1,8 @@
 // GLOBAL VARIABLES
-var line_chart;
-var pie_chart;
+var mainData = {};
+var dateList = new Array;
 
-var main_data = {};
-var date_list = new Array;
-
-var urls_ref = {
+var urlsRef = {
     0: {"url": "http://s3.amazonaws.com/logtrust-static/test/test/data1.json", "type": "firstSerie"},
     1: {"url": "http://s3.amazonaws.com/logtrust-static/test/test/data2.json", "type": "secondSerie"},
     2: {"url": "http://s3.amazonaws.com/logtrust-static/test/test/data3.json", "type": "thirdSerie"}
@@ -40,9 +37,9 @@ function sortOnKeys(dict) {
 
 function CheckUrlRef(url) {
     var urlType;
-    for (ref in urls_ref) {
-        if (urls_ref[ref]["url"] == url) {
-            return urls_ref[ref]["type"];
+    for (ref in urlsRef) {
+        if (urlsRef[ref]["url"] == url) {
+            return urlsRef[ref]["type"];
         }
         
     };
@@ -54,23 +51,23 @@ handleFirstSerie = function(myObj) {
     for (x in myObj) {
         var mydate = new Date(myObj[x]["d"]);
         mydate = convertDate(mydate);
-        if (!(date_list.includes(mydate))) {
-            date_list.push(mydate);
+        if (!(dateList.includes(mydate))) {
+            dateList.push(mydate);
         }; 
     
-        if (myObj[x]["cat"].toUpperCase() in main_data) {
-            main_data[myObj[x]["cat"].toUpperCase()][mydate] = myObj[x]["value"];
+        if (myObj[x]["cat"].toUpperCase() in mainData) {
+            mainData[myObj[x]["cat"].toUpperCase()][mydate] = myObj[x]["value"];
         }
         else {
-            main_data[myObj[x]["cat"].toUpperCase()] = {};
-            for (date in date_list) {
-                main_data[myObj[x]["cat"].toUpperCase()][date_list[date]] = null;
+            mainData[myObj[x]["cat"].toUpperCase()] = {};
+            for (date in dateList) {
+                mainData[myObj[x]["cat"].toUpperCase()][dateList[date]] = null;
             };
-            main_data[myObj[x]["cat"].toUpperCase()][mydate] = myObj[x]["value"]
+            mainData[myObj[x]["cat"].toUpperCase()][mydate] = myObj[x]["value"]
         };
-        for (cat in main_data) {
-            if (!(mydate in main_data[cat])) {
-                main_data[cat][mydate] = null;
+        for (cat in mainData) {
+            if (!(mydate in mainData[cat])) {
+                mainData[cat][mydate] = null;
             }
         };
     };
@@ -80,27 +77,27 @@ handleSecondSerie = function(myObj) {
     for (x in myObj) {
         var mydate = new Date(myObj[x]["myDate"]);
         mydate = convertDate(mydate);
-        if (!(date_list.includes(mydate))) {
-            date_list.push(mydate);
+        if (!(dateList.includes(mydate))) {
+            dateList.push(mydate);
         }; 
         var myCategory = myObj[x]["categ"].toUpperCase();
-        if (myCategory in main_data) {
-            if (main_data[myCategory][mydate] == null) {
-                main_data[myCategory][mydate] = myObj[x]["val"];
+        if (myCategory in mainData) {
+            if (mainData[myCategory][mydate] == null) {
+                mainData[myCategory][mydate] = myObj[x]["val"];
             } else {
-                main_data[myCategory][mydate] = main_data[myCategory][mydate] + myObj[x]["val"];
+                mainData[myCategory][mydate] = mainData[myCategory][mydate] + myObj[x]["val"];
             }
         }
         else {
-            main_data[myCategory] = {};
-            for (date in date_list) {
-                main_data[myCategory][date_list[date]] = null;
+            mainData[myCategory] = {};
+            for (date in dateList) {
+                mainData[myCategory][dateList[date]] = null;
             };
-            main_data[myCategory][mydate] = myObj[x]["val"]
+            mainData[myCategory][mydate] = myObj[x]["val"]
         };
-        for (cat in main_data) {
-            if (!(mydate in main_data[cat])) {
-                main_data[cat][mydate] = null;
+        for (cat in mainData) {
+            if (!(mydate in mainData[cat])) {
+                mainData[cat][mydate] = null;
             }
         };
     };
@@ -114,29 +111,29 @@ handleThirdSerie = function(myObj) {
         findRegexDate = rawText.match(regexDate)[0];
         var mydate = new Date(findRegexDate);
         mydate = convertDate(mydate);
-        if (!(date_list.includes(mydate))) {
-            date_list.push(mydate);
+        if (!(dateList.includes(mydate))) {
+            dateList.push(mydate);
         }; 
         var myCategory = rawText.match(regexCat)[0];
         myCategory = myCategory.replaceAll("#", "");
         //console.log(myCategory);
-        if (myCategory in main_data) {
-            if (main_data[myCategory][mydate] == null) {
-                main_data[myCategory][mydate] = myObj[x]["val"];
+        if (myCategory in mainData) {
+            if (mainData[myCategory][mydate] == null) {
+                mainData[myCategory][mydate] = myObj[x]["val"];
             } else {
-                main_data[myCategory][mydate] = main_data[myCategory][mydate] + myObj[x]["val"];
+                mainData[myCategory][mydate] = mainData[myCategory][mydate] + myObj[x]["val"];
             }            
         }
         else {
-            main_data[myCategory] = {};
-            for (date in date_list) {
-                main_data[myCategory][date_list[date]] = null;
+            mainData[myCategory] = {};
+            for (date in dateList) {
+                mainData[myCategory][dateList[date]] = null;
             };
-            main_data[myCategory][mydate] = myObj[x]["val"]
+            mainData[myCategory][mydate] = myObj[x]["val"]
         };
-        for (cat in main_data) {
-            if (!(mydate in main_data[cat])) {
-                main_data[cat][mydate] = null;
+        for (cat in mainData) {
+            if (!(mydate in mainData[cat])) {
+                mainData[cat][mydate] = null;
             }
         };
     };
@@ -145,15 +142,15 @@ handleThirdSerie = function(myObj) {
 // FUNCTIONS TO GENERATE GRAPHS
 function generateLineGraph(mydata) {
 
-    var data_series = [];
+    var dataSeries = [];
     for (x in mydata) {
         var values = Object.keys(mydata[x]).map(function(key){
             return mydata[x][key];
         });
-        data_series.push({name: x, data: values});
+        dataSeries.push({name: x, data: values});
     };
         
-    line_chart = Highcharts.chart('container', {
+    lineChart = Highcharts.chart('container', {
         chart: {
             type: 'line'
         },
@@ -161,9 +158,9 @@ function generateLineGraph(mydata) {
             text: 'Test'
         },
         xAxis: {
-            categories: date_list.sort(),
+            categories: dateList.sort(),
         },
-        series: data_series
+        series: dataSeries
     });
 }
 
@@ -228,14 +225,14 @@ xmlhttp.onreadystatechange = function() {
   
   
 // MAIN Loop over the urls
-for (ref in urls_ref) {
-    xmlhttp.open("GET", urls_ref[ref]["url"], false);
+for (ref in urlsRef) {
+    xmlhttp.open("GET", urlsRef[ref]["url"], false);
     xmlhttp.send();      
 }
-for (x in main_data) {
-    main_data[x] = sortOnKeys(main_data[x]);
+for (x in mainData) {
+    mainData[x] = sortOnKeys(mainData[x]);
 };
 
-generateLineGraph(main_data);
-generatePieGraph(main_data);
+generateLineGraph(mainData);
+generatePieGraph(mainData);
 
