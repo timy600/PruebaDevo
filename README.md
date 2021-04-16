@@ -30,9 +30,9 @@ Tampoco habia utilizado antes Highcharts pero es bastante parecido a todo lo que
 ### Resultado en PNG:
 
 #### El Line Chart:
-![alt text](https://github.com/timy600/PruebaDevo/img/main/linechart.png?raw=true)
+![alt text](https://github.com/timy600/PruebaDevo/blob/main/img/linechart.png)
 
 #### El Pie Chart:
-![alt text](https://github.com/timy600/PruebaDevo/img/main/piechart.png?raw=true)
+![alt text](https://github.com/timy600/PruebaDevo/blob/main/img/piechart.png)
 Saludos
 Thibaut Chevée
