@@ -27,5 +27,12 @@ Añadié una verification del tipo del parametro. En caso de que hacen falta mas
 Como dicho durante la ultima entrevista, para manegar los RegEx necesitaba hacerlo despacito.
 Tampoco habia utilizado antes Highcharts pero es bastante parecido a todo lo que utilicé con Chart.js, Plotly y Dash. Lo que si me ha bloqueado ha sido para generar primero un container con un grafico vacio y  rellenarlo despues, asi que no he utilizado la parte Asynchronus de AJAX para no esperar que se manejen los datos de JSON, seguro que con mas datos o mas series eso tendria que solucionarlo.
 
+### Resultado en PNG:
+
+#### El Line Chart:
+![alt text](https://github.com/timy600/PruebaDevo/img/main/linechart.png?raw=true)
+
+#### El Pie Chart:
+![alt text](https://github.com/timy600/PruebaDevo/img/main/piechart.png?raw=true)
 Saludos
 Thibaut Chevée
