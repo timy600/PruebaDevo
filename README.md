@@ -12,3 +12,12 @@ Por fin, con la lista de divisores, hacer una suma y compararla con n.
 Añadir cada resultado "perfecto", "abundante" o "defectivo" en una nueva lista para el Return.
 
 Añadié una verification del tipo del parametro. En caso de que hacen falta mas Error Handlings, pasaria a una funcion con un contenido try/except. 
+
+## Ejercicio 2
+
+Estructura del main.js:
+- Variables globales
+- Funciones "Utils"
+- Funciones gestiando los JSON para extraer los datos: handleFirstSerie, handleSecondSerie, handleThirdSerie
+- Funciones para generar los graficos: generateLineGraph, generatePieGraph
+- MAIN: ultimo block que hace un boucle sobre los tres enlace urls para llamar una request xmlhttp. Tras procesar los datos en main_data, se sortean por fechas y se mandan el los graficos.
